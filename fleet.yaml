@@ -1,0 +1,29 @@
+# fleet.yaml
+defaultNamespace: default
+
+# This is the "Brain" of your deployment
+targetCustomizations:
+  # 1. Rules for your Dev Cluster
+  - name: development-config
+    clusterSelector:
+      matchLabels:
+        env: development # Matches the label you added to your Dev cluster
+    helm:
+      # These values override what is in your values.yaml
+      values:
+        replicaCount: 1
+        appLabel: fleet-nginx-dev
+        service:
+          nodePort: 30080
+
+  # 2. Rules for your Prod Cluster
+  - name: production-config
+    clusterSelector:
+      matchLabels:
+        env: production # Matches the label you added to your Prod cluster
+    helm:
+      values:
+        replicaCount: 2
+        appLabel: fleet-nginx-prod
+        service:
+          nodePort: 30081 # Using a different port for Prod so they don't clash
