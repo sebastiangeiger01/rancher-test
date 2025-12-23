@@ -1,0 +1,15 @@
+# Default values for my-nginx-app.
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080
+
+# We use this to link the Service to the Deployment
+appLabel: fleet-nginx
